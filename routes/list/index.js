@@ -28,7 +28,7 @@ router.get('/', function(req, res, next) {
 }, function(req, res) {
     var params = {
         TableName: config.DB_TABLENAME,
-        ProjectionExpression: "meetingName, meetingDate, meetingStatus",
+        ProjectionExpression: "id, meetingName, meetingDate, meetingStatus",
         FilterExpression: "meetingStatus = :scheduled_status or meetingStatus = :complete_status",
         ExpressionAttributeValues: {
             ":scheduled_status": "Scheduled",
@@ -53,6 +53,7 @@ router.get('/', function(req, res, next) {
                 );
                 */
                 meetingDetail = {
+                    meetingID : meeting.id,
                     meetingName : meeting.meetingName,
                     meetingDate : meeting.meetingDate,
                     meetingStatus : meeting.meetingStatus
@@ -75,6 +76,13 @@ router.get('/', function(req, res, next) {
         }
     }
 
+});
+
+
+/* Update the meeting status */
+/* Post new meeting */
+router.post('/updatestatus', function(req, res) {
+    console.log("Beginning to update status for", req);
 });
 
 module.exports = router;

@@ -16,14 +16,32 @@ block content
           th Meeting
           th Date
           th Status
+          th Update
         each ob in JSON.parse(json)
           tr
             td #{ob['meetingName']}
             td #{ob['meetingDate']}
             td #{ob['meetingStatus']}
+            td
+              - var meetingurl = "meetingID=" + ob.meetingID
+              button(id="changeStatus", type="button", class="btn btn-primary", name=meetingurl) Change Status
              
     div(class="footer")
       p &copy; Made for Qui!
       
   script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
   script(src="../static/bootstrap/js/bootstrap.min.js")
+  script.
+    $(document).ready(function() {
+      $("#changeStatus").click(function() {
+        $.post( "/updatestatus", $("#changeStatus").serialize(),
+            function(data) {
+              console.log("Status change successful");
+              window.location.reload(false);
+            }
+        )
+        .error(function(xhr) {
+          console.error("Status change error");
+        })
+      })
+    })
