@@ -16,12 +16,23 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Goal App' });
 });
 
+
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+    s4() + '-' + s4() + s4() + s4();
+}
+
 /* Post new meeting */
 router.post('/addnew', function(req, res) {
   var nameField = req.body.name,
       meetingDateField = req.body.meetingDate,
       meetingStatusField = req.body.meetingStatus,
-      id = "create a unique here";
+      id = guid();
 
   
   // @todo: add some validation on the input fields
@@ -32,7 +43,7 @@ router.post('/addnew', function(req, res) {
       id: {'S': id},
       name: {'S': nameField},
       meetingDate: {'S': meetingDateField},
-      status: {'S': meetingStatusField}
+      status: {'S': meetingStatusField},
     }
   };
 
