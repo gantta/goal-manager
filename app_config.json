@@ -1,0 +1,6 @@
+{ 
+  "AWS_REGION": "AWS_REGION",
+  "DB_TABLENAME": "DYNAMODB_TABLE",
+  "NEW_MEETING_TOPIC": "TOPIC_ARN",
+  "DYNAMO_ENDPOINT": "https://<dynamodbtable_endpoint>.amazonaws.com"
+}

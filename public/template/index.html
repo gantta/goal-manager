@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Goal Manager</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/bootstrap/css/theme/flatly/bootstrap.css" rel="stylesheet">
+    
+    <!-- Custom styles for this template -->
+    <link href="../static/bootstrap/css/jumbotron-narrow.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">My Meetings</a></li>
+        </ul>
+        <h3 class="text-muted">Get to 30 meetings by EOY</h3>
+      </div>
+    	
+      <div id="addSuccess" class="alert alert-success" style="display:none">
+        <p id="addSuccessText">Got it! New meeting saved. Please refresh the page.</p>
+      </div>
+      <div id="addError" class="alert alert-info" style="display:none">
+        <p id="addErrorText">Well this is embarrassing. Unable to save the new meeting.</p>
+      </div>
+      <div class="jumbotron">
+        <h1>3 Completed Onsites of 30</h1>
+        <p class="lead">13 weeks remaining until December 31st!!</p>
+        <p><a class="btn btn-lg btn-success"  data-toggle="modal" href="#meetingModal">Add New Meeting</a></p>
+      </div>
+
+
+      <div class="footer">
+        <p>&copy; Made for Qui!</p>
+      </div>
+      
+      <!-- Modal -->
+       <div class="modal fade" id="meetingModal" tabindex="-1" role="dialog" aria-labelledby="meetingModal" aria-hidden="true">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+               <h4 class="modal-title">Meeting Details...</h4>
+             </div>
+             <div class="modal-body">
+               <form id="meetingForm" role="form">
+                 <input type="hidden" id="theme" name="theme" value="flatly"/>
+                 <div class="form-group">
+                   <label for="name">Meeting Name</label>
+                   <input type="text" class="form-control" id="name" name="name" placeholder="Something interesting">
+                 </div>
+                 <div class="form-group">
+                   <label for="meetingDate">Date</label>
+                   <input type="date" class="form-control" id="meetingDate" name="meetingDate" placeholder="Today's Date'">
+                 </div>
+                 <div class="form-group">
+                   <label for="meetingStatus">Meeting Status</label>
+                   <select class="form-control" name="meetingStatus">
+                     <option>Scheduled</option>
+                     <option>Complete</option>
+                   </select>
+                 </div>
+             </div>
+             <div class="modal-footer">
+               <button id="addMeeting" type="button" class="btn btn-primary">Add Meeting</button>
+             </div>
+           </div><!-- /.modal-content -->
+         </div><!-- /.modal-dialog -->
+       </div><!-- /.modal -->
+
+    </div> <!-- /container -->
+
+    <script src="../static/jquery/jquery.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $("#addMeeting").click(function() {
+        $.post( "/signup", $("#signupForm").serialize(),
+                function(data) {
+                  $("#addSuccess").show();
+                }
+              )
+              .error(function(xhr) {
+                switch(xhr.status) {
+                  case 409:
+                    $("#addError").show();
+                    break;
+                  default:
+                    $("#addError").show();
+                }
+              })
+              .always(function() {
+                $("#meetingModal").modal('hide');
+              });
+      })
+    })
+    </script>
+  </body>
+</html>

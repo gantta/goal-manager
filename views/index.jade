@@ -1,0 +1,72 @@
+extends layout
+
+block content
+  div(class="container")
+    div(class="header")
+      ul(class="nav nav-pills pull-right")
+        li(class="active")
+          a(href="#") Home
+        li
+          a(href="./list") My Meetings
+      h3(class="text-muted") Get to 30 meetings by EOY
+    div(id="addSuccess", class="alert alert-success", style="display:none")
+      p(id="addSuccessText") Got it! New meeting saved. Please refresh the page.
+    div(id="addError", class="alert alert-info", style="display:none")
+      p(id="addErrorText") Well this is embarrassing. Unable to save the new meeting.
+    div(class="jumbotron")
+      h1 3 Completed Onsites of 30
+      p(class="lead") 13 weeks remaining until December 31st!!
+      p
+        a(class="btn btn-lg btn-success", data-toggle="modal", href="#meetingModal") Add New Meeting
+    
+    div(class="footer")
+      p &copy; Made for Qui!
+      
+    // Modal
+    div(class="modal fade", id="meetingModal", tabindex="-1", role="dialog", aria-labelledby="meetingModal", aria-hidden="true")
+      div(class="modal-dialog")
+        div(class="modal-content")
+          div(class="modal-header")
+            button(type="button", class="close", data-dismiss="modal", aria-hidden="true") &times;
+            h4(class="modal-title") Meeting Details...
+          div(class="modal-body")
+            form(id="meetingForm", role="form")
+              input(type="hidden", id="theme", name="theme", value="flatly")
+              div(class="form-group")
+                label(for="name") Meeting Name
+                input(type="text", class="form-control", id="name", name="name", placeholder="Something interesting")
+              div(class="form-group")
+                label(for="meetingDate") Date
+                input(type="date", class="form-control", id="meetingDate", name="meetingDate", placeholder="Today's Date")             
+              div(class="form-group")
+                label(for="meetingStatus") Meeting Status
+                select(class="form-control", name="meetingStatus")
+                  option(value="Scheduled") Scheduled
+                  option(value="Complete") Complete
+          div(class="modal-footer")
+            button(id="addMeeting", type="button", class="btn btn-primary") Add Meeting
+  //script(src="../static/jquery/jquery.js")
+  script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+  script(src="../static/bootstrap/js/bootstrap.min.js")
+  script.
+    $(document).ready(function() {
+      $("#addMeeting").click(function() {
+        $.post( "/addnew", $("#meetingForm").serialize(),
+                function(data) {
+                  $("#addSuccess").show();
+                }
+              )
+              .error(function(xhr) {
+                switch(xhr.status) {
+                  case 409:
+                    $("#addError").show();
+                    break;
+                  default:
+                    $("#addError").show();
+                }
+              })
+              .always(function() {
+                $("#meetingModal").modal('hide');
+              });
+      })
+    })
