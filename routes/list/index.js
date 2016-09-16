@@ -43,13 +43,15 @@ router.get('/', function(req, res, next) {
         if (err) {
             console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
         } else {
-            console.log("Scan succeeded.");
+            console.log("Scan succeeded. Found", data.Count, "items");
             allMeetings.length = 0;
             data.Items.forEach(function(meeting) {
+                /*
                 console.log(
                     meeting.meetingName + ": ",
                     meeting.meetingDate, " - Status: ", meeting.meetingStatus
                 );
+                */
                 meetingDetail = {
                     meetingName : meeting.meetingName,
                     meetingDate : meeting.meetingDate,
@@ -66,7 +68,7 @@ router.get('/', function(req, res, next) {
             }
 
             var ob = JSON.stringify(allMeetings, null, 2);
-            console.log(ob);
+            //console.log(ob);
 
             res.render('list', { title: 'Goal App | My Meetings', json : ob } );
 

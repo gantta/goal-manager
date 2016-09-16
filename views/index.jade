@@ -14,7 +14,9 @@ block content
     div(id="addError", class="alert alert-info", style="display:none")
       p(id="addErrorText") Well this is embarrassing. Unable to save the new meeting.
     div(class="jumbotron")
-      h1 3 Completed Onsites of 30
+      - var ob = JSON.parse(json)
+        h1 #{ob['completedCount']} Completed Onsites of 30
+      //h1 3 Completed Onsites of 30
       p(class="lead") 13 weeks remaining until December 31st!!
       p
         a(class="btn btn-lg btn-success", data-toggle="modal", href="#meetingModal") Add New Meeting

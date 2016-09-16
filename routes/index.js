@@ -6,14 +6,49 @@ var fs = require('fs');
 var config = fs.readFileSync('./app_config.json', 'utf8');
 config = JSON.parse(config);
 
+// Update the region settings
+AWS.config.update({
+  region: config.AWS_REGION,
+  endpoint: config.ENDPOINT
+});
+
 //Create DynamoDB client and pass in region.
 var dynamoDB = new AWS.DynamoDB({region: config.AWS_REGION});
+var docClient = new AWS.DynamoDB.DocumentClient();
+var completedCount = {};
 
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Goal App' });
+  //res.render('index', { title: 'Goal App' });
+
+  var params = {
+    TableName: config.DB_TABLENAME,
+    ProjectionExpression: "meetingName, meetingDate, meetingStatus",
+    FilterExpression: "meetingStatus = :complete_status",
+    ExpressionAttributeValues: {
+      ":complete_status": "Complete"
+    }
+  };
+
+  console.log("Scanning meetings table");
+  docClient.scan(params, onScan);
+
+  function onScan(err, data) {
+    if (err) {
+      console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+      console.log("Scan succeeded. Found", data.Count, "items");
+      completedCount = {
+        completedCount : data.Count
+      };
+      var ob = JSON.stringify(completedCount, null, 2);
+
+      res.render('index', { title: 'Goal App', json: ob });
+
+    }
+  }  
 });
 
 

@@ -10,9 +10,6 @@ block content
           a(href="./list") My Meetings
       h3(class="text-muted") Meeting Details
     
-    //p !{json}
-    //p !{json.year}
-        
     div(class="table")
       table
         tr
@@ -20,7 +17,7 @@ block content
           th Date
           th Status
         each ob in JSON.parse(json)
-          tr 
+          tr
             td #{ob['meetingName']}
             td #{ob['meetingDate']}
             td #{ob['meetingStatus']}
