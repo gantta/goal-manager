@@ -41,9 +41,9 @@ router.post('/addnew', function(req, res) {
     TableName: config.DB_TABLENAME,
     Item: {
       id: {'S': id},
-      name: {'S': nameField},
+      meetingName: {'S': nameField},
       meetingDate: {'S': meetingDateField},
-      status: {'S': meetingStatusField},
+      meetingStatus: {'S': meetingStatusField},
     }
   };
 

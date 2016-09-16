@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  div(class="container")
+    div(class="header")
+      ul(class="nav nav-pills pull-right")
+        li(class="active")
+          a(href="/") Home
+        li
+          a(href="./list") My Meetings
+      h3(class="text-muted") Meeting Details
+    
+    //p !{json}
+    //p !{json.year}
+        
+    div(class="table")
+      table
+        tr
+          th Meeting
+          th Date
+          th Status
+        each ob in JSON.parse(json)
+          tr 
+            td #{ob['meetingName']}
+            td #{ob['meetingDate']}
+            td #{ob['meetingStatus']}
+             
+    div(class="footer")
+      p &copy; Made for Qui!
+      
+  script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+  script(src="../static/bootstrap/js/bootstrap.min.js")
