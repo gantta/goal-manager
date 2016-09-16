@@ -1,6 +1,6 @@
 { 
-  "AWS_REGION": "<region>",
-  "DB_TABLENAME": "<tableName",
+  "AWS_REGION": "us-east-1",
+  "DB_TABLENAME": "quisMeetings",
   "NEW_SIGNUP_TOPIC": "TOPIC_ARN",
   "ENDPOINT": "https://dynamodb.us-east-1.amazonaws.com"
 }
