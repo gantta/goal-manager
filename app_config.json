@@ -1,0 +1,6 @@
+{ 
+  "AWS_REGION": "<region>",
+  "DB_TABLENAME": "<tableName",
+  "NEW_SIGNUP_TOPIC": "TOPIC_ARN",
+  "ENDPOINT": "https://dynamodb.us-east-1.amazonaws.com"
+}
