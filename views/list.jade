@@ -24,7 +24,9 @@ block content
             td #{ob['meetingStatus']}
             td
               - var meetingurl = "meetingID=" + ob.meetingID
-              button(id="changeStatus", type="button", class="btn btn-primary", name=meetingurl) Change Status
+              - var meetingStatus = "currentStatus=" + ob.meetingStatus
+              //button(type="button", class="btn btn-primary", name=meetingurl, onclick="changeStatus(" + meetingurl + ")") Change Status
+              a(href="./updatestatus?" + meetingurl + "?" + meetingStatus) Change Status
              
     div(class="footer")
       p &copy; Made for Qui!
@@ -44,4 +46,11 @@ block content
           console.error("Status change error");
         })
       })
+      function changeStatus(meetingURL) {
+        $.post( "updatestatus", meetingURL),
+         function(data) {
+           console.log("Status change successful");
+           window.location.href = '/updatestatus' + meetingURL;
+         })
+      }
     })
