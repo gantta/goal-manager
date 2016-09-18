@@ -17,6 +17,7 @@ block content
           th Date
           th Status
           th Update
+          th Delete
         each ob in JSON.parse(json)
           tr
             td #{ob['meetingName']}
@@ -27,6 +28,8 @@ block content
               - var meetingStatus = "currentStatus=" + ob.meetingStatus
               //button(type="button", class="btn btn-primary", name=meetingurl, onclick="changeStatus(" + meetingurl + ")") Change Status
               a(href="./updatestatus?" + meetingurl + "?" + meetingStatus) Change Status
+            td
+              a(href="./delete?" + meetingurl) Delete
              
     div(class="footer")
       p &copy; Made for Qui!
