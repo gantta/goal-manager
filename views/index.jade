@@ -8,7 +8,7 @@ block content
           a(href="#") Home
         li
           a(href="./list") My Meetings
-      h3(class="text-muted") Get to 30 meetings by EOY
+      h3(class="text-muted") Get to 30 Onsites by EOY
     div(id="addSuccess", class="alert alert-success", style="display:none")
       p(id="addSuccessText") Got it! New meeting saved. Please refresh the page.
     div(id="addError", class="alert alert-info", style="display:none")
@@ -16,8 +16,10 @@ block content
     div(class="jumbotron")
       - var ob = JSON.parse(json)
         h1 #{ob['completedCount']} Completed Onsites of 30
-      //h1 3 Completed Onsites of 30
-      p(class="lead") 13 weeks remaining until December 31st!!
+      - var today = parseInt(moment(Date.now()).format("w")) + 1
+      - var remainingWeeks = 52 - today 
+      - var lastDay = moment("2016-12-31").format("MMMM Do")
+      p(class="lead") #{remainingWeeks} weeks remaining until #{lastDay}!!
       p
         a(class="btn btn-lg btn-success", data-toggle="modal", href="#meetingModal") Add New Meeting
     

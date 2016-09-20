@@ -12,6 +12,7 @@ var updateStatus = require('./routes/updatestatus/index');
 var deleteM = require('./routes/delete/index');
 
 var app = express();
+app.locals.moment = require('moment');
 
 
 // view engine setup
